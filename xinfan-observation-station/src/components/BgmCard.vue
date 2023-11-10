@@ -1,5 +1,6 @@
 <template>
-    <div class="card" :class="{ 'hovered': isHovered }" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+    <div class="card" :class="{ 'hovered': isHovered }" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave"
+        @click="toBgm">
         <div class="image-container">
             <img :src="imageSrc" alt="Card Image" />
         </div>
@@ -11,9 +12,12 @@
             <p>有{{ doing }}人在看(仅BGM)</p>
         </div>
     </div>
+
 </template>
   
 <script>
+
+
 export default {
     props: {
         imageSrc: String,
@@ -22,6 +26,7 @@ export default {
         ratingCount: Number,
         firstPlay: String,
         doing: String,
+        url: String,
     },
     data() {
         return {
@@ -35,7 +40,11 @@ export default {
         handleMouseLeave() {
             this.isHovered = false;
         },
+        toBgm() {
+            window.open(this.url, "_blank");
+        }
     },
+
 };
 </script>
   
@@ -52,7 +61,7 @@ export default {
     border: 1px solid #ccc;
     border-radius: 8px;
     margin: 5px; */
-    
+
 }
 
 .image-container {
@@ -78,25 +87,37 @@ export default {
     height: 100%;
     object-fit: fill;
 }
+
 .info-container {
     flex: 2;
     padding: 16px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    line-height: 1; /* 设置 line-height 为 1，确保文字不会撑开容器 */
+    line-height: 1;
+    /* 设置 line-height 为 1，确保文字不会撑开容器 */
 }
 
 .info-container h2 {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    line-height: 1; /* 设置 line-height 为 1，确保文字不会撑开容器 */
+    transition: transform 0.3s ease;
+    /* 添加过渡效果，使滚动更平滑 */
+}
+
+.info-container:hover h2 {
+    white-space: normal;
+    overflow: hidden;
+    /* 显示滚动条 */
+    transform: translateX(-10%);
+    /* 通过 transform 来实现水平滚动效果 */
 }
 
 .card.hovered {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     transform: scale(1.05);
 }
+
 
 </style>

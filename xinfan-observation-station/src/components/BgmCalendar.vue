@@ -10,7 +10,8 @@
             :ratingCount="value.rating && value.rating.total"
             :imageSrc="value.images && value.images.large"
             :firstPlay="value.air_date"
-            :doing="value.collection && value.collection.doing"/>
+            :doing="value.collection && value.collection.doing"
+            :url="value.url"/>
         </div>
         <!-- 优先使用中文名，如果不存在则使用英文名-->
     </div>
@@ -51,6 +52,7 @@ export default {
 
 <style scoped>
 .date-card {
+    background-color: white;
     border: 1px solid #ccc;
     border-radius: 8px;
     margin: 10px;
