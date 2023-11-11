@@ -131,7 +131,7 @@
   .calendar-cell {
     text-align: center;
     padding: 10px;
-    cursor: pointer;
+    /* cursor: pointer; */
   }
   
   .prev-month {
@@ -154,7 +154,7 @@
   .nav-button {
     border: none;
     padding: 5px 10px;
-    cursor: pointer;
+    /* cursor: pointer; */
     font-size: 16px;
     margin: 0 10px;
   }

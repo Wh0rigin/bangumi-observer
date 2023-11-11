@@ -1,6 +1,6 @@
 import axios from "axios";
 // import { getToken } from "@/utils/auth";
-
+// import {recommandedMock}  from '../mock/recommandedAnime.js'
 const service = axios.create({
     baseURL: "https://api.bgm.tv",
     timeout: 5000,
@@ -9,7 +9,20 @@ const service = axios.create({
 service.interceptors.request.use(
     (config) => {
         // config.headers.Authorization = "Bearer VL7SPrFYAdstXEiuzDmQRCIwrBLEeKTzFlGWsWnl";
-        // console.log(config.headers)
+
+
+        // if(config.url === '/recommend'){
+        //     return Promise.resolve(
+        //         {
+        //             data: recommandedMock,
+        //             status: 200,
+        //             statusText: 'OK',
+        //             headers: config.headers,
+        //             config: config,
+        //         }
+        //     )
+        // }
+
         return config;
     },
     (error) => {

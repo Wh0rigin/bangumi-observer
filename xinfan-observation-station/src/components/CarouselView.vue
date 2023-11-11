@@ -18,7 +18,6 @@ export default {
                 { image: 'https://lain.bgm.tv/pic/cover/c/a6/66/326_D8wjw.jpg' },
                 { image: 'https://lain.bgm.tv/pic/cover/c/c2/4c/253_jJJj9.jpg' },
                 { image: 'https://lain.bgm.tv/pic/cover/c/67/d1/876_dCfrd.jpg' },
-                // Add more slides as needed
             ],
             currentIndex: 0,
             autoPlayInterval: 5000, // Set the interval for auto play in milliseconds
