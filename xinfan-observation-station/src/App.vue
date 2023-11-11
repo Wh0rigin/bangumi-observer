@@ -7,12 +7,21 @@
       <p :class="{'sidebar-btn-now':page=='BgmRecommended'}" class="sidebar-btn" @click="changePage('BgmRecommended')">编剧推荐</p>
     </aside>
     <div class="content-wrap">
-      <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
       
-
-      <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-      <BgmCalendar v-if="page=='BgmCalendar'"></BgmCalendar>
-      <CarouselView v-if="page=='BgmRecommended'"></CarouselView>
+      <div v-if="page=='BgmCalendar'">
+        <BgmCalendar></BgmCalendar>
+      </div>
+      
+      
+      
+      <div v-if="page=='BgmRecommended'">
+        <CarouselView></CarouselView>
+        <h2>番剧推荐</h2>
+        <div class="recommand">
+          <RecommendationCard  v-for="(item, index) in animes" :key="index" :anime="item"></RecommendationCard>
+        </div>
+      </div>
+      
     </div>
   </div>
   
@@ -22,6 +31,8 @@
 import BgmCalendar from './components/BgmCalendar.vue';
 import CalendarView from './components/CalendarView.vue';
 import CarouselView from './components/CarouselView.vue'
+import RecommendationCard from './components/RecommendationCard'
+import {recommandedMock}  from './mock/recommandedAnime.js'
 // import HelloWorld from './components/HelloWorld.vue'
 
 
@@ -30,7 +41,8 @@ export default {
   components: {
     BgmCalendar,
     CalendarView,
-    CarouselView
+    CarouselView,
+    RecommendationCard
   },
   data() {
     return {
@@ -39,11 +51,13 @@ export default {
       day: 10,
       isClassActive:true,
       inputValue: '',
-      page: 'BgmCalendar'
+      page: 'BgmCalendar',
+      animes:[]
     }
   },
   mounted() {
-    this.getTime()
+    this.getTime();
+    this.animes = recommandedMock;
   },
   methods: {
     getTime() {
@@ -182,5 +196,13 @@ export default {
 .display {
   opacity: 0; /* 初始不透明度为 1 */
   transition: opacity 1s ease-in-out;
+}
+
+.recommand{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 30px;
 }
 </style>
