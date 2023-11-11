@@ -4,8 +4,10 @@
       <p class="input-box"><input class="input" v-model="inputValue" placeholder="输入番组搜索" @focus="inputUsing" @blur="inputDisfocus"/><svg @click="inputSearch" :class="{ 'display ': isClassActive }" t="1699634206494" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5224" id="mx_n_1699634206495" width="200" height="200"><path d="M955.069071 864.311021 740.015134 649.258107c-3.752464-3.751441-8.841366-5.860475-14.149255-5.860475-5.306866 0-10.395768 2.108011-14.149255 5.860475l-16.692171 16.692171-38.34226-38.34226c53.03796-59.810201 85.298711-138.442072 85.298711-224.478588 0-186.774871-151.952784-338.727655-338.727655-338.727655S64.527642 216.35456 64.527642 403.12943c0 186.775894 151.952784 338.728678 338.727655 338.728678 86.36909 0 165.276231-32.510438 225.170343-85.913718l38.303374 38.303374-17.34504 17.34504c-7.812943 7.813966-7.812943 20.48352 0 28.297486l215.051891 215.052914c3.753487 3.751441 8.841366 5.860475 14.149255 5.860475 5.306866 0 10.395768-2.108011 14.149255-5.860475l62.334697-62.334697C962.883037 884.794541 962.883037 872.124987 955.069071 864.311021zM104.546078 403.12943c0-164.709319 133.9999-298.709219 298.709219-298.709219s298.709219 133.9999 298.709219 298.709219S567.964616 701.839673 403.255297 701.839673 104.546078 567.838749 104.546078 403.12943zM878.585119 912.496463 691.829691 725.741036l34.036187-34.036187 186.755428 186.755428L878.585119 912.496463z" fill="#2c2c2c" p-id="5225"></path></svg></p>
       <CalendarView :year="year" :month="month" :day="day"></CalendarView>
       <p :class="{'sidebar-btn-now':page=='BgmCalendar'}" class="sidebar-btn" @click="changePage('BgmCalendar')">每日新番</p>
+      <p :class="{'sidebar-btn-now':page=='BgmSatellite'}" class="sidebar-btn" @click="changePage('BgmSatellite')">番剧卫星</p>
       <p :class="{'sidebar-btn-now':page=='BgmRecommended'}" class="sidebar-btn" @click="changePage('BgmRecommended')">编剧推荐</p>
       <p :class="{'sidebar-btn-now':page=='WebsiteInfo'}" class="sidebar-btn" @click="changePage('WebsiteInfo')">网页详情</p>
+      <p :class="{'sidebar-btn-now':page=='AboutMe'}" class="sidebar-btn" @click="changePage('AboutMe')">关于我们</p>
     </aside>
     <div class="content-wrap">
       
@@ -39,6 +41,18 @@
       <div v-if="page=='WebsiteInfo'">
         <LineChart :data="chartData" :xAxisLabels="xAxisLabels"></LineChart>
       </div>
+
+      <div v-if="page=='AboutMe'">
+        <h2>组长：胡佳俊</h2>
+        <h3>组员：张高远</h3>
+        <h4><a href="https://gitee.com/sakeSensei/xinfan-observation-station">项目已开源</a></h4>
+        <MessageBoard></MessageBoard>
+      </div>
+
+      <div v-if="page=='BgmSatellite'">
+        <future-bgm-group/>
+      </div>
+
     </div>
   </div>
   
@@ -51,9 +65,11 @@ import CarouselView from './components/CarouselView.vue'
 import RecommendationCard from './components/RecommendationCard'
 import {recommandedMock}  from './mock/recommandedAnime.js'
 import LineChart from "@/components/LineChart.vue";
+import MessageBoard from './components/MessageBoard.vue';
 
 import {search} from './api/search.js'
 import BgmCard from './components/BgmCard.vue';
+import FutureBgmGroup from './components/FutureBgmGroup.vue';
 // import HelloWorld from './components/HelloWorld.vue'
 
 
@@ -65,7 +81,9 @@ export default {
     CarouselView,
     RecommendationCard,
     BgmCard,
-    LineChart
+    LineChart,
+    MessageBoard,
+    FutureBgmGroup
 },
   data() {
     return {

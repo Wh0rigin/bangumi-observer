@@ -95,7 +95,7 @@
         }
       },
       isCurrentDay(day) {
-        console.log(this.currentMonth+":"+new Date().month);
+        // console.log(this.currentMonth+":"+new Date().month);
         return day.date === this.currentDay && !day.prevMonth && this.currentMonth === this.month && this.currentYear === this.year;
       },
     },

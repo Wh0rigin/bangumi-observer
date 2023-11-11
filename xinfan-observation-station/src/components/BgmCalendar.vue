@@ -69,6 +69,7 @@ export default {
 .date-title {
     font-weight: bold;
     margin-bottom: 5px;
+    background-image: linear-gradient(90deg,#e0c3fc 0%,#8ec5fc 100%);
 }
 
 .card-content {
