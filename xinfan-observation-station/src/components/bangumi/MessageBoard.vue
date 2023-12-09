@@ -10,7 +10,7 @@
         <div v-for="(item, index) in messages" :key="index" class="message">
                 <div class="message-info">
                     <div class="info">
-                        <img src="../assets/logo.png" alt="" width="50px" height="50px">
+                        <img src="../../assets/logo.png" alt="" width="50px" height="50px">
                         <strong>{{item.username}}</strong>
                     </div>
                     <span>发布于:{{item.date}}</span>

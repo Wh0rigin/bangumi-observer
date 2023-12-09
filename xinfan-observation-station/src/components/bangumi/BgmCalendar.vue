@@ -19,8 +19,8 @@
   
 <script>
 
-import { calendar } from '@/api/calendar.js'
-import BgmCard from './BgmCard.vue';
+import { calendar } from '@/api/bangumi/calendar.js'
+import BgmCard from '../bangumi/BgmCard.vue';
 // import axios from "axios";
 
 export default {

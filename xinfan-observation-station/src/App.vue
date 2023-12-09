@@ -59,17 +59,17 @@
 </template>
 
 <script>
-import BgmCalendar from './components/BgmCalendar.vue';
-import CalendarView from './components/CalendarView.vue';
-import CarouselView from './components/CarouselView.vue'
-import RecommendationCard from './components/RecommendationCard'
+import BgmCalendar from './components/bangumi/BgmCalendar.vue';
+import CalendarView from './components/bangumi/CalendarView.vue';
+import CarouselView from './components/bangumi/CarouselView.vue'
+import RecommendationCard from './components/bangumi/RecommendationCard'
 import {recommandedMock}  from './mock/recommandedAnime.js'
-import LineChart from "@/components/LineChart.vue";
-import MessageBoard from './components/MessageBoard.vue';
+import LineChart from "@/components/bangumi/LineChart.vue";
+import MessageBoard from './components/bangumi/MessageBoard.vue';
 
-import {search} from './api/search.js'
-import BgmCard from './components/BgmCard.vue';
-import FutureBgmGroup from './components/FutureBgmGroup.vue';
+import {search} from './api/bangumi/search.js'
+import BgmCard from './components/bangumi/BgmCard.vue';
+import FutureBgmGroup from './components/bangumi/FutureBgmGroup.vue';
 // import HelloWorld from './components/HelloWorld.vue'
 
 

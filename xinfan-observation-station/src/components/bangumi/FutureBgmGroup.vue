@@ -18,7 +18,7 @@
 
 
 import FutureBgmCard from './FutureBgmCard.vue';
-import {futureAnimes} from '../mock/futureAnime.js'
+import {futureAnimes} from '../../mock/futureAnime.js'
 
 
 export default {
