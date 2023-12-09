@@ -3,16 +3,20 @@
         <aside class="sidebar">
 
             <CalendarView :year="year" :month="month" :day="day"></CalendarView>
-            <p  class="sidebar-btn" @click="changePage('/bangumi')">
+            <p class="sidebar-btn" @click="changePage('/bangumi')">
                 动画咨询</p>
-            <p  class="sidebar-btn sidebar-btn-now" @click="changePage('/mad')">
+            <p class="sidebar-btn sidebar-btn-now" @click="changePage('/mad')">
                 动画二创</p>
-            <p  class="sidebar-btn" @click="changePage('/music')">
+            <p class="sidebar-btn" @click="changePage('/music')">
                 动画音乐</p>
         </aside>
         <div class="content-wrap">
+            <bilibili-player :aid="aid" :cid="cid" :key="aid" />
+            <div class="recommend">
+                <bilibili-card v-for="(item, index) in correlations" :key="index" :item="correlations[index]" @click="changeVideo(index)"/>
+            </div>
+            
 
-         
         </div>
     </div>
 </template>
@@ -20,6 +24,11 @@
 <script>
 
 import CalendarView from '../components/bangumi/CalendarView.vue';
+import BilibiliPlayer from '../components/bilibili/BilibiliPlayer.vue'
+import BilibiliCard from '../components/bilibili/BilibiliCard.vue'
+
+import {bilibilirecommend} from '../mock/bilibilirecommend.js'
+import {recommend} from '../api/bilibili/recommend.js'
 import { useRouter } from 'vue-router'
 // import HelloWorld from './components/HelloWorld.vue'
 
@@ -28,38 +37,50 @@ export default {
     name: 'VideoPage',
     components: {
         CalendarView,
-
+        BilibiliPlayer,
+        BilibiliCard
     },
     data() {
         return {
-           router:null,
+            router: null,
+            correlations: [],
+            aid: '3905466',
+            cid: '296371069',
+            year: 2023,
+            month: 12,
+            day: 10,
         }
     },
     methods: {
         changePage(url) {
             this.router.push(url)
+        },
+        async getRecommends() {
+            try {
+                const response = await recommend({ 'aid': this.aid })
+                this.correlations = response.data
+                console.log('correlations:'+this.correlations);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        },
+        changeVideo(index){
+            this.aid = this.correlations[index]["aid"];
+            this.cid = this.correlations[index]["cid"];
         }
     },
     mounted() {
         this.router = useRouter();
+        this.correlations = bilibilirecommend["data"]
     },
 
 }
 </script>
   
-<style scope>
+<style scoped>
 * {
     transition: all 0.2s ease;
     /* 添加过渡效果，持续时间为0.2秒，缓动函数为ease */
-}
-
-#app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #555555;
-    cursor: url('../assets/miku/default.cur'), default;
 }
 
 .container {
@@ -125,6 +146,8 @@ export default {
     /* 添加一些通用的样式，例如设置最大宽度、居中等 */
     max-width: 1200px;
 
+    /* display: flex; */
+
     box-sizing: border-box;
     /* 设置最大宽度 */
     margin: 0 auto 2px auto;
@@ -179,11 +202,13 @@ export default {
     transition: opacity 1s ease-in-out;
 }
 
-.recommand {
+.recommend {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     padding: 30px;
-}</style>
+}
+
+</style>
   

@@ -1,6 +1,8 @@
 import axios from "axios";
 // import { getToken } from "@/utils/auth";
 // import {recommandedMock}  from '../mock/recommandedAnime.js'
+// axios.defaults.withCredentials = true;
+
 export const bangumi = axios.create({
     baseURL: "https://api.bgm.tv",
     timeout: 5000,
@@ -47,10 +49,12 @@ bangumi.interceptors.response.use(
 export const bilibili = axios.create({
     baseURL: "https://api.bilibili.com",
     timeout: 5000,
+    withCredentials: true, // 允许携带凭证，用于跨域请求
 });
 
 bilibili.interceptors.request.use(
     (config) => {
+       
         return config;
     },
     (error) => {
@@ -62,7 +66,6 @@ bilibili.interceptors.request.use(
 bilibili.interceptors.response.use(
     (response) => {
         const res = response;
-
         return res;
     },
     (error) => {

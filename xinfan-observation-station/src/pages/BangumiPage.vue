@@ -135,7 +135,7 @@ export default {
                     this.router.push('/mad');
                     break;
                 case 'AnimeMusic':
-                    this.router.push('/');
+                    this.router.push('/music');
                     break;
                 default:
                     this.page = cur;
@@ -171,7 +171,7 @@ export default {
 }
 </script>
   
-<style scope>
+<style scoped>
 * {
     transition: all 0.2s ease;
     /* 添加过渡效果，持续时间为0.2秒，缓动函数为ease */

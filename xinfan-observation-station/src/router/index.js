@@ -4,13 +4,19 @@ const routes = [
   {
     path: '/',
     name: 'bangumi',
-    alias: ['/bangumi'],   // 别名，可以定义很多个
+    alias: ['/bangumi'],   
     component: () => import('../pages/BangumiPage.vue')
   },
   {
     path: '/mad',
     name: 'mad&amv',
+    alias: ['/video'],   
     component: () => import('../pages/VideoPage.vue')
+  },
+  {
+    path: '/music',
+    name: 'music',
+    component: () => import('../pages/MusicPage.vue')
   }
 ]
 

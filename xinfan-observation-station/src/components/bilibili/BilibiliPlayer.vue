@@ -17,7 +17,7 @@ export default {
     },
     data(){
         return {
-            src:''
+            src:'',
         }
     }
 }
@@ -26,15 +26,15 @@ export default {
 <style scoped>
 .aspect-ratio {
     position: relative;
-    width: 800px;
-    height: 600px;
-    padding-bottom: 75%;
+    width: 1155px;
+    height: 680px;
+    /* padding-bottom: 75%; */
 }
 
 .aspect-ratio iframe {
     position: absolute;
-    width: 800px;
-    height: 600px;
+    width: 1155px;
+    height: 680px;
     left: 0;
     top: 0;
 }
