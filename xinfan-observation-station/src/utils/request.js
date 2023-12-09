@@ -1,4 +1,5 @@
 import axios from "axios";
+import {readYamlFile} from "./token.js"
 // import { getToken } from "@/utils/auth";
 // import {recommandedMock}  from '../mock/recommandedAnime.js'
 // axios.defaults.withCredentials = true;
@@ -11,7 +12,6 @@ export const bangumi = axios.create({
 bangumi.interceptors.request.use(
     (config) => {
         // config.headers.Authorization = "Bearer VL7SPrFYAdstXEiuzDmQRCIwrBLEeKTzFlGWsWnl";
-
 
         // if(config.url === '/recommend'){
         //     return Promise.resolve(
@@ -45,7 +45,6 @@ bangumi.interceptors.response.use(
     }
 );
 
-
 export const bilibili = axios.create({
     baseURL: "https://api.bilibili.com",
     timeout: 5000,
@@ -54,7 +53,6 @@ export const bilibili = axios.create({
 
 bilibili.interceptors.request.use(
     (config) => {
-       
         return config;
     },
     (error) => {
@@ -74,13 +72,12 @@ bilibili.interceptors.response.use(
     }
 );
 
-
 export const music163 = axios.create({
     baseURL: "https://autumnfish.cn",
     timeout: 5000,
 });
 
-bilibili.interceptors.request.use(
+music163.interceptors.request.use(
     (config) => {
         return config;
     },
@@ -101,3 +98,42 @@ music163.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+
+export const chatApi = axios.create({
+    baseURL: "https://dashscope.aliyuncs.com",
+    timeout: 5000,
+});
+
+// 在请求拦截器中添加 Bearer Token
+chatApi.interceptors.request.use(
+    (config) => {
+        const bearerToken = readYamlFile('../config/token.yaml')['token'];
+
+        // 如果存在 Bearer Token，则将其添加到请求头中
+        if (bearerToken) {
+            config.headers["Authorization"] = `Bearer ${bearerToken}`;
+        }
+
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
+
+
+export const proxy_chatApi = axios.create({
+    baseURL: "http://127.0.0.1:5000",
+    timeout: 5000,
+});
+
+proxy_chatApi.interceptors.request.use(
+    (config) => {
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+

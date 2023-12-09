@@ -17,6 +17,11 @@ const routes = [
     path: '/music',
     name: 'music',
     component: () => import('../pages/MusicPage.vue')
+  },
+  {
+    path: '/chat',
+    name: 'chat',
+    component: () => import('../pages/ChatPage.vue')
   }
 ]
 

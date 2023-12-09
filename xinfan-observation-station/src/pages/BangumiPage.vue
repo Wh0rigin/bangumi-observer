@@ -20,6 +20,7 @@
                 编剧推荐</p>
             <p class="sidebar-btn" @click="changePage('AnimeVideo')">动画二创</p>
             <p class="sidebar-btn" @click="changePage('AnimeMusic')">动画音乐</p>
+            <p class="sidebar-btn" @click="changePage('Chat')">初音助手</p>
             <p :class="{ 'sidebar-btn-now': page == 'WebsiteInfo' }" class="sidebar-btn" @click="changePage('WebsiteInfo')">
                 网页详情</p>
             <p :class="{ 'sidebar-btn-now': page == 'AboutMe' }" class="sidebar-btn" @click="changePage('AboutMe')">关于我们</p>
@@ -136,6 +137,9 @@ export default {
                     break;
                 case 'AnimeMusic':
                     this.router.push('/music');
+                    break;
+                case 'Chat':
+                    this.router.push('/chat');
                     break;
                 default:
                     this.page = cur;

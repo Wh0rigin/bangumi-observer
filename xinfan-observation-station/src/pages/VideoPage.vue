@@ -9,13 +9,16 @@
                 动画二创</p>
             <p class="sidebar-btn" @click="changePage('/music')">
                 动画音乐</p>
+            <p class="sidebar-btn" @click="changePage('/chat')">
+                初音助手</p>
         </aside>
         <div class="content-wrap">
             <bilibili-player :aid="aid" :cid="cid" :key="aid" />
             <div class="recommend">
-                <bilibili-card v-for="(item, index) in correlations" :key="index" :item="correlations[index]" @click="changeVideo(index)"/>
+                <bilibili-card v-for="(item, index) in correlations" :key="index" :item="correlations[index]"
+                    @click="changeVideo(index)" />
             </div>
-            
+
 
         </div>
     </div>
@@ -27,8 +30,8 @@ import CalendarView from '../components/bangumi/CalendarView.vue';
 import BilibiliPlayer from '../components/bilibili/BilibiliPlayer.vue'
 import BilibiliCard from '../components/bilibili/BilibiliCard.vue'
 
-import {bilibilirecommend} from '../mock/bilibilirecommend.js'
-import {recommend} from '../api/bilibili/recommend.js'
+import { bilibilirecommend } from '../mock/bilibilirecommend.js'
+import { recommend } from '../api/bilibili/recommend.js'
 import { useRouter } from 'vue-router'
 // import HelloWorld from './components/HelloWorld.vue'
 
@@ -59,12 +62,12 @@ export default {
             try {
                 const response = await recommend({ 'aid': this.aid })
                 this.correlations = response.data
-                console.log('correlations:'+this.correlations);
+                console.log('correlations:' + this.correlations);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         },
-        changeVideo(index){
+        changeVideo(index) {
             this.aid = this.correlations[index]["aid"];
             this.cid = this.correlations[index]["cid"];
         }
@@ -209,6 +212,5 @@ export default {
     flex-wrap: wrap;
     padding: 30px;
 }
-
 </style>
   

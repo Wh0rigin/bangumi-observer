@@ -1,2 +1,6 @@
-/node_modules
+*/node_modules
 /xinfan-observation-station/node_modules
+*.yaml
+token*
+.venv/*
+bride-backend-py/.venv
