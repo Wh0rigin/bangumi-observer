@@ -1,7 +1,6 @@
 <template>
     <div class="container">
         <aside class="sidebar">
-
             <CalendarView :year="year" :month="month" :day="day"></CalendarView>
             <p class="sidebar-btn" @click="changePage('/bangumi')">
                 动画咨询</p>
@@ -11,19 +10,23 @@
                 动画音乐</p>
         </aside>
         <div class="content-wrap">
+            <music-player :url="url" :key="url"/>
             <h1>二次元合辑 | 为你定制的二次元必听曲</h1>
             <div class="recommand">
-                
-
+                <music-card v-for="(item, index) in tracks" @click="changeMusic(index)" :key="index" :name="item.name" :ar="item.ar[0].name" :al="item.al.name" :imageSrc="item.al.picUrl"/>
             </div>
         </div>
     </div>
 </template>
   
 <script>
-
-import CalendarView from '../components/bangumi/CalendarView.vue';
+import MusicCard from '../components/music163/MusicCard.vue'
+import CalendarView from '../components/bangumi/CalendarView.vue'
+import MusicPlayer from '../components/music163/MusicPlayer.vue'
 import { useRouter } from 'vue-router'
+
+import {detail} from '../api/music163/musicGroup.js'
+import {songUrl} from '../api/music163/music.js'
 // import HelloWorld from './components/HelloWorld.vue'
 
 
@@ -31,20 +34,52 @@ export default {
     name: 'MusicPage',
     components: {
         CalendarView,
-
+        MusicCard,
+        MusicPlayer
     },
     data() {
         return {
             router: null,
+            year: 2023,
+            month: 12,
+            day: 10,
+            musicGroupId:'8410145201',
+            s:'0',
+            tracks:[],
+            url:'http://m701.music.126.net/20231209203803/669789f87cb443e7bbdebd639216e0de/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/23170415660/7953/a3af/bc93/90c7d94026523949ea0bfdd92fdbaeb3.mp3'
         }
     },
     methods: {
         changePage(url) {
             this.router.push(url)
+        },
+        async detail() {
+            try {
+                const response = await detail({'id':this.musicGroupId,'s':this.s})
+                // console.log(response);
+                this.tracks = response.data.playlist.tracks
+                // console.log('tracks:'+this.tracks);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        },
+        async getUrl(id) {
+            try {
+                const response = await songUrl({'id':id})
+                console.log(response);
+                this.url = response.data.data[0].url
+                
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        },
+        changeMusic(index){
+            this.getUrl(this.tracks[index].id)
         }
     },
     mounted() {
         this.router = useRouter();
+        this.detail()
     },
 
 }
