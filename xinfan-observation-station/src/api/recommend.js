@@ -1,7 +1,7 @@
-import request from '@/utils/request'
+import {bangumi} from '@/utils/request'
 
 export function recommend(query) {
-  return request({
+  return bangumi({
     url: '/recommend',
     method: 'get',
     params: query

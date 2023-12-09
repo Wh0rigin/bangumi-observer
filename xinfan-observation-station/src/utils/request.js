@@ -1,12 +1,12 @@
 import axios from "axios";
 // import { getToken } from "@/utils/auth";
 // import {recommandedMock}  from '../mock/recommandedAnime.js'
-const service = axios.create({
+export const bangumi = axios.create({
     baseURL: "https://api.bgm.tv",
     timeout: 5000,
 });
 
-service.interceptors.request.use(
+bangumi.interceptors.request.use(
     (config) => {
         // config.headers.Authorization = "Bearer VL7SPrFYAdstXEiuzDmQRCIwrBLEeKTzFlGWsWnl";
 
@@ -31,7 +31,7 @@ service.interceptors.request.use(
     }
 );
 
-service.interceptors.response.use(
+bangumi.interceptors.response.use(
     (response) => {
         const res = response;
 
@@ -43,4 +43,4 @@ service.interceptors.response.use(
     }
 );
 
-export default service;
+

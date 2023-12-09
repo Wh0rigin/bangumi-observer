@@ -1,7 +1,7 @@
-import request from '@/utils/request'
+import {bangumi} from '@/utils/request'
 
 export function calendar(query) {
-  return request({
+  return bangumi({
     url: '/calendar',
     method: 'get',
     params: query

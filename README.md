@@ -14,7 +14,7 @@ html5大作业
 
 #### 使用说明
 
-1.  npm serve run(启动)
+1.  npm run serve(在启动)
 
 
 #### 参与贡献
