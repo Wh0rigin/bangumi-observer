@@ -60,7 +60,7 @@ app.post("/call", async (req, res) => {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${bearerToken}`,
-                // 如果需要在请求头中添加其他信息，可以在这里添加
+
             },
         });
 
