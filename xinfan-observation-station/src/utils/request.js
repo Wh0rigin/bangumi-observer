@@ -73,7 +73,7 @@ bilibili.interceptors.response.use(
 );
 
 export const music163 = axios.create({
-    baseURL: "https://autumnfish.cn",
+    baseURL: "http://localhost:3000",
     timeout: 5000,
 });
 
