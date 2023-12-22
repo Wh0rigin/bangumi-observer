@@ -22,6 +22,16 @@ const routes = [
     path: '/chat',
     name: 'chat',
     component: () => import('../pages/ChatPage.vue')
+  },
+  {
+    path: '/rss',
+    name: 'rss',
+    component: () => import('../pages/RssSubscribePage.vue')
+  },
+  {
+    path: '/atom',
+    name: 'atom',
+    component: () => import('../pages/AtomSubscribePage.vue')
   }
 ]
 

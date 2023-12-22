@@ -10,6 +10,10 @@
                 动画音乐</p>
             <p class="sidebar-btn" @click="changePage('/chat')">
                 初音助手</p>
+            <p class="sidebar-btn" @click="changePage('/rss')">
+                RSS订阅</p>
+            <p class="sidebar-btn " @click="changePage('/atom')">
+                Atom订阅</p>
         </aside>
         <div class="content-wrap">
             <music-player :url="url" :key="url" :name="name" :pic="pic" />

@@ -8,15 +8,15 @@
                 动画二创</p>
             <p class="sidebar-btn" @click="changePage('/music')">
                 动画音乐</p>
-            <p class="sidebar-btn sidebar-btn-now" @click="changePage('/chat')">
+            <p class="sidebar-btn" @click="changePage('/chat')">
                 初音助手</p>
             <p class="sidebar-btn" @click="changePage('/rss')">
                 RSS订阅</p>
-            <p class="sidebar-btn " @click="changePage('/atom')">
+            <p class="sidebar-btn sidebar-btn-now" @click="changePage('/atom')">
                 Atom订阅</p>
         </aside>
         <div class="content-wrap">
-            <h1>初音助手</h1>
+            <h1><svg t="1703243927110" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4220" width="200" height="200"><path d="M42.666667 853.333333a128 128 0 1 1 256 0 128 128 0 0 1-256 0z m938.666666 128h-178.773333c0-418.986667-340.906667-759.893333-759.893333-759.893333V42.666667c517.546667 0 938.666667 421.12 938.666666 938.666666z m-298.666666 0h-182.826667c0-252.074667-205.098667-457.130667-457.173333-457.130666V341.333333c352.896 0 640 287.104 640 640z" fill="#EE802F" p-id="4221"></path></svg>ATOM订阅</h1>
             <div v-for="(item, index) in history" :key="index" class="message">
                 <div class="message-info">
                     <div class="info">
@@ -28,13 +28,22 @@
             <div class="recommand">
                 <div class="wrapper">
                     <div class="input-data">
-                        <input type="text" v-model="inputValue" @keyup.enter="sayWithMiku" required>
+                        <input type="text" v-model="inputValue" @keyup.enter="atomSubscribe" required>
                         <div class="underline"></div>
                         <label>Input</label>
                     </div>
+                    <p class="example">yuki站点更新:http://yuc.wiki/atom.xml</p>
                 </div>
-                <img draggable="false"  src="../assets/miku_assistant.gif" style="width: 370px; height: 300px;" @click="sayWithMiku" />
+                
             </div>
+            <div>{{warning}}</div>
+            <div class="father">
+                <div class="son">标题</div>
+                <div class="son">URL</div>
+                <div class="son">发布日期</div>
+                <div class="son">更新日期</div>
+            </div>
+            <my-list v-for="(item, index) in updates" :contents="Object.values(item)" :urlIndex="1" :key="index"/>
         </div>
     </div>
 </template>
@@ -43,17 +52,17 @@
 
 import CalendarView from '../components/bangumi/CalendarView.vue'
 import { useRouter } from 'vue-router'
-
-import { getAnswer } from '../api/chat/proxyAPI.js'
+import {getMessage} from '@/api/atom/proxyAPI.js'
+import MyList from '@/components/common/MyList.vue'
 // import {getAnswer} from '../api/chat/chatAPI.js'
 // import HelloWorld from './components/HelloWorld.vue'
 
 
 export default {
-    name: 'ChatPage',
+    name: 'AtomSubscribePage',
     components: {
         CalendarView,
-
+        MyList
     },
     data() {
         return {
@@ -62,19 +71,28 @@ export default {
             month: 12,
             day: 10,
             inputValue: '',
-            history: []
+            updates: [],
+            warning: ''
         }
     },
     methods: {
         changePage(url) {
             this.router.push(url)
         },
-        async sayWithMiku() {
-            this.history.push({ 'sayer': 'me', 'text': this.inputValue })
-            // const response = await getAnswer({"model": "qwen-v1",    "input": {"prompt": this.inputValue},"parameters": {}})
-            const response = await getAnswer({ 'question': this.inputValue })
-            this.history.push({ 'sayer': 'miku', 'text': response.data.data.text })
-            this.inputValue = ''
+        async atomSubscribe(){
+            try{
+                const response = await getMessage({"atomurl":this.inputValue})
+                if(response.data.code == 200){
+                    this.updates = response.data.data
+                    console.log(this.updates)
+                    this.warning = ''
+                }else{
+                    this.warning = '找不到耶'
+                }
+                this.inputValue = '';
+            }catch(error){
+                this.warning = '找不到耶'
+            }
         }
     },
     mounted() {
@@ -201,6 +219,11 @@ export default {
     transition-delay: 0;
 }
 
+.example{
+    font-size: 10px;
+    text-align: left;
+    color: #c0c0c0;
+}
 
 .display {
     opacity: 0;
@@ -254,122 +277,27 @@ export default {
     pointer-events: none;
 }
 
-.messages {
-    margin-top: 100px;
-    width: 950px;
-    padding: 50px 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: grgb(243, 243, 243);
-    border-radius: 20px;
-    box-shadow: 0 10px 30px #00000020;
-}
-
-.form {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    flex-direction: column;
-    width: 100%;
-    padding-bottom: 70px;
-}
-
-
-#username {
-    height: 90px;
-}
-
-#message {
-    height: 200px;
-}
-
-.messages h1 {
-    width: 100%;
-    text-align: left;
-    margin-bottom: 70px;
-    font-size: 100px;
-    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: 10px;
-}
-
-#submitBtn {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    background-image: linear-gradient(90deg, #e0c3fc 0%, #8ec5fc 100%);
-    border: none;
-    font-size: 30px;
-    width: 200px;
-    height: 70px;
-    border-radius: 50px;
-}
-
-#messageBoard {
-    width: 100%;
-    text-align: left;
-}
-
-@keyframes messageFadeIn {
-    to {
-        opacity: 1;
-    }
-}
-
-.message {
-    width: 1000px;
-    margin: 10px 50px;
-    padding: 10px;
-    opacity: 0;
-    animation: messageFadeIn 0.5s ease forwards;
-    background-image: linear-gradient(90deg, #8ec5fc 0%, #e0c3fc 100%);
-    background-color: #fff;
-   
-    border-radius: 10px;
-    box-shadow: 0 10px 20px #00000026;
-    text-shadow: 0px 0px 20px #fff;
-}
-
-.message-info {
-    height: 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 36px;
-    position: relative;
-}
-
-.info {
-    transform: translateY(-30px);
-}
-
-.info img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 10px #fff solid;
-}
-
-.message strong {
-    top: 5px;
-    position: absolute;
-    width: 200px;
-    letter-spacing: 3px;
-    left: 10px;
-}
-
-.message-info span {
-    position: absolute;
-    right: 10px;
-}
 
 .content {
     font-size: 36px;
     margin: 30px;
     width: 95%;
 }
+
+.father {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #dbdbdb;
+    justify-content: space-between;
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+}
+
+.son {
+    width: 400px;
+    text-align: center;
+}
+
 </style>
   

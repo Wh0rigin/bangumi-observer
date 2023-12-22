@@ -12,8 +12,11 @@
     "core-js": "^3.8.3",
     "js-cookie": "^3.0.5",
     "js-yaml": "^4.1.0",
+    "timers-browserify": "^2.0.12",
     "vue": "^3.2.13",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "xml-loader": "^1.2.1",
+    "xml2js": "^0.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

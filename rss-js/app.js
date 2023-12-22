@@ -1,44 +1,58 @@
-const axios = require('axios');
-const parseString = require('xml2js').parseString;
+const axios = require("axios");
+const parseString = require("xml2js").parseString;
 
-// 用于获取Atom feed的函数
-function fetchAtomFeed(url, callback) {
-  axios.get(url)
-    .then(response => {
-      callback(response.data);
-    })
-    .catch(error => {
-      console.error('Error fetching Atom feed:', error);
+// 用于获取RSS feed的函数
+function fetchRSS(url, callback) {
+    axios
+        .get(url)
+        .then((response) => {
+            callback(response.data);
+        })
+        .catch((error) => {
+            console.error("Error fetching RSS feed:", error);
+        });
+}
+
+// 解析RSS feed的函数
+function parseRSS(xmlData) {
+    // console.log(xmlData);
+    parseString(xmlData, { explicitArray: false }, (err, result) => {
+        if (err) {
+            console.error("Error parsing RSS feed:", err);
+            return;
+        }
+
+        // 提取所需的信息
+        const items = result.rss.channel.item;
+        for (let i = 0; i < items.length; i++) {
+            const title = items[i].title;
+            const link = items[i].link;
+            console.log("Title: " + title + ", Link: " + link);
+        }
     });
 }
 
-// 解析Atom feed的函数
-function parseAtomFeed(xmlData) {
-  parseString(xmlData, { explicitArray: false }, (err, result) => {
-    if (err) {
-      console.error('Error parsing Atom feed:', err);
-      return;
-    }
+// 调用fetchRSS函数，并在获取到数据后调用parseRSS函数
+// const rssFeedURL = "https://bbs.acgrip.com/forum.php?mod=rss&fid=37&auth=0";
+const rssFeedURL = "https://bgm.tv/feed/blog/anime";
+fetchRSS(rssFeedURL, parseRSS);
 
-    // 提取所需的信息
-    const entries = result.feed.entry;
-    
-    for (let i = 0; i < entries.length; i++) {
-    //   console.log(entries[i])
-      const title = entries[i].title;
-      const link = entries[i].link['$'].href;
-      const updated = entries[i].updated;
-      const published = entries[i].published;
+// const Parser = require('rss-parser');
+// const parser = new Parser();
 
-      console.log("title: " + title + ", link: " + link + ",published:" + published +  ",updated:" + updated);
-      atomFeedRssCallbacks.push({"title":title,"link":link,"published":published,"updated":updated})
-    }
-    console.log(atomFeedRssCallbacks)
-  });
-}
+// const rssFeedUrl = 'https://nyaa.si/?page=rss';
 
-var atomFeedRssCallbacks = []
-// 调用fetchAtomFeed函数，并在获取到数据后调用parseAtomFeed函数
-const atomFeedURL = "http://yuc.wiki/atom.xml";
-fetchAtomFeed(atomFeedURL, parseAtomFeed);
+// parser.parseURL(rssFeedUrl)
+//   .then((feed) => {
+//     console.log('Feed Title:', feed.title);
 
+//     feed.items.forEach((item) => {
+//       console.log('Title:', item.title);
+//       console.log('Pub Date:', item.pubDate);
+//       console.log('Link:', item.link);
+//       console.log('------------------------');
+//     });
+//   })
+//   .catch((err) => {
+//     console.error('Error fetching RSS feed:', err);
+//   });

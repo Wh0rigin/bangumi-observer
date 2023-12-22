@@ -123,12 +123,12 @@ chatApi.interceptors.request.use(
 
 
 
-export const proxy_chatApi = axios.create({
+export const proxy_Api = axios.create({
     baseURL: "http://127.0.0.1:5000",
     timeout: 10000,
 });
 
-proxy_chatApi.interceptors.request.use(
+proxy_Api.interceptors.request.use(
     (config) => {
         return config;
     },
