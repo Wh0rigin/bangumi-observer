@@ -101,7 +101,7 @@ music163.interceptors.response.use(
 
 export const chatApi = axios.create({
     baseURL: "https://dashscope.aliyuncs.com",
-    timeout: 5000,
+    timeout: 10000,
 });
 
 // 在请求拦截器中添加 Bearer Token
@@ -125,7 +125,7 @@ chatApi.interceptors.request.use(
 
 export const proxy_chatApi = axios.create({
     baseURL: "http://127.0.0.1:5000",
-    timeout: 5000,
+    timeout: 10000,
 });
 
 proxy_chatApi.interceptors.request.use(

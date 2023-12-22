@@ -16,7 +16,6 @@
             <div v-for="(item, index) in history" :key="index" class="message">
                 <div class="message-info">
                     <div class="info">
-
                         <strong>{{ item.sayer }}</strong>
                     </div>
                 </div>
@@ -25,7 +24,7 @@
             <div class="recommand">
                 <div class="wrapper">
                     <div class="input-data">
-                        <input type="text" v-model="inputValue" required>
+                        <input type="text" v-model="inputValue" @keyup.enter="sayWithMiku" required>
                         <div class="underline"></div>
                         <label>Input</label>
                     </div>
