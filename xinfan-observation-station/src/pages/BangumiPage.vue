@@ -57,6 +57,9 @@
 
             <div v-if="page == 'WebsiteInfo'">
                 <LineChart :data="chartData" :xAxisLabels="xAxisLabels"></LineChart>
+                <h1>为什么选用Vue?</h1>
+                <img src="../assets/why_vue.png"/>
+                <h2>以动画名命名版本号，是动画爱好者的宝藏</h2>
             </div>
 
             <div v-if="page == 'AboutMe'">
