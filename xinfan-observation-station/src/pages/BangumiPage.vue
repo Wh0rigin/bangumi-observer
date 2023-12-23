@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <div id="floatButton"  @click="toGrid()">个人动画生涯喜好表 =></div>
         <aside class="sidebar">
             <p class="input-box"><input class="input" v-model="inputValue" placeholder="输入番组搜索" @focus="inputUsing"
                     @blur="inputDisfocus" /><svg @click="inputSearch" :class="{ 'display ': isClassActive }"
@@ -165,6 +166,9 @@ export default {
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
+        },
+        toGrid(){
+            this.router.push('/animegrid')
         }
     },
     // created() {
@@ -323,6 +327,28 @@ export default {
     align-items: center;
     flex-wrap: wrap;
     padding: 30px;
+}
+
+
+#floatButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 10px; /* 圆角半径 */
+    font-size: 14px; /* 调整字体大小 */
+    padding: 10px; /* 调整内边距 */
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    white-space: nowrap; /* 防止文本换行 */
+    transition: background 0.3s ease; /* 添加背景颜色的过渡效果 */
+}
+
+#floatButton:hover {
+    background: linear-gradient(to right, #3498db, #ff9ff4); /* 添加渐变效果，可以根据需要调整颜色 */
 }
 </style>
   

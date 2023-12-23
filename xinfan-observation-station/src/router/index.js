@@ -32,6 +32,11 @@ const routes = [
     path: '/atom',
     name: 'atom',
     component: () => import('../pages/AtomSubscribePage.vue')
+  },
+  {
+    path: '/animegrid',
+    name: 'animegrid',
+    component:()=> import('../pages/AnimeGridPage.vue')
   }
 ]
 
