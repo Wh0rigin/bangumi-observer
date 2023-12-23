@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="image-container">
-            <img :src="imgurl" alt="还没选择番剧哦">
+            <img :src="imgurl" alt="还没选择番剧哦" >
         </div>
         <hr class="divider">
         <div class="title">

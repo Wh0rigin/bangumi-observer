@@ -12,7 +12,7 @@
           <bgm-card v-for="(item, index) in searchResult" :key="index" :name="item.name_cn || item.name"
             :rating="item.rating && item.rating.score" :ratingCount="item.rating && item.rating.total"
             :imageSrc="item.images && item.images.large" :firstPlay="item.air_date"
-            :doing="item.collection && item.collection.doing" :url="item.url" @click="sendDataToParent(item.images && item.images.large)" />
+            :doing="item.collection && item.collection.doing" :url="item.url" @click="sendDataToParent(item.images && item.images.large,item.name_cn || item.name)" />
         </div>
       </div>
 
@@ -21,8 +21,8 @@
 </template>
   
 <script>
-import { search } from '@/api/bangumi/search.js'
-import BgmCard from './BgmCard.vue'
+import { search } from '@/api/bangumi/search.js';
+import BgmCard from './BgmCard.vue';
 
 export default {
   components: {
@@ -50,11 +50,11 @@ export default {
       console.log(response.data.list)
       this.searchResult = response.data.list
     },
-    sendDataToParent(imgSrc) {
+    sendDataToParent(imgSrc,title) {
       this.closeModal()
       // 传递数据给父组件
       // console.log("son:"+imgSrc);
-      this.$emit('sendData', imgSrc);
+      this.$emit('sendData', imgSrc, title);
     }
   },
 };

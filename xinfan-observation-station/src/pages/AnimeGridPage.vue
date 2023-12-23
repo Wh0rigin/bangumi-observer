@@ -3,7 +3,9 @@
         <div id="floatButton" @click="returnMainPage()">返回</div>
         <div class="content-wrap">
             <anime-grid />
+            
         </div>
+        
     </div>
 </template>
   
@@ -12,6 +14,7 @@
 import { useRouter } from 'vue-router'
 import AnimeGrid from '@/components/animegrid/AnimeGrid.vue'
 
+
 // import {getAnswer} from '../api/chat/chatAPI.js'
 // import HelloWorld from './components/HelloWorld.vue'
 
@@ -19,7 +22,8 @@ import AnimeGrid from '@/components/animegrid/AnimeGrid.vue'
 export default {
     name: 'AnimeGridPage',
     components: {
-        AnimeGrid
+        AnimeGrid,
+
     },
     data() {
         return {

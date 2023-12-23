@@ -6,7 +6,7 @@ import {readYamlFile} from "./token.js"
 
 export const bangumi = axios.create({
     baseURL: "https://api.bgm.tv",
-    timeout: 5000,
+    timeout: 10000,
 });
 
 bangumi.interceptors.request.use(
