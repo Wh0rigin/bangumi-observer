@@ -22,7 +22,7 @@
   
 <script>
 import { search } from '@/api/bangumi/search.js';
-import BgmCard from './BgmCard.vue';
+import BgmCard from './BgmCard';
 
 export default {
   components: {

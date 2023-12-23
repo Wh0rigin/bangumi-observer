@@ -44,7 +44,7 @@
                 <div class="son">发布日期</div>
                 <div class="son">更新日期</div>
             </div>
-            <my-list v-for="(item, index) in updates" :contents="Object.values(item)" :urlIndex="1" :key="index"/>
+            <who-list v-for="(item, index) in updates" :contents="Object.values(item)" :urlIndex="1" :key="index"/>
         </div>
     </div>
 </template>
@@ -54,7 +54,7 @@
 import CalendarView from '../components/bangumi/CalendarView.vue'
 import { useRouter } from 'vue-router'
 import {getMessage} from '@/api/atom/proxyAPI.js'
-import MyList from '@/components/common/MyList.vue'
+import WhoList from '@/components/common/WhoList.vue'
 // import {getAnswer} from '../api/chat/chatAPI.js'
 // import HelloWorld from './components/HelloWorld.vue'
 
@@ -63,7 +63,7 @@ export default {
     name: 'AtomSubscribePage',
     components: {
         CalendarView,
-        MyList
+        WhoList
     },
     data() {
         return {

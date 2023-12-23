@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: 'MyList',
+    name: 'WhoList',
     props: {
         urlIndex: Number,
         contents: Array
