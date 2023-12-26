@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "useDefineForClassFields": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "types": [
+      "webpack-env"
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+, "src/main.js", "src/utils/token.js", "src/utils/request.js", "src/utils/auth.js", "src/router/index.js", "src/mock/recommandedAnime.js", "src/mock/futureAnime.js", "src/mock/bilibilirecommend.js", "src/api/rss/proxyAPI.js", "src/api/music163/musicGroup.js", "src/api/music163/music.js", "src/api/chat/proxyAPI.js", "src/api/chat/chatAPI.js", "src/api/bilibili/recommend.js", "src/api/bangumi/search.js", "src/api/bangumi/recommend.js", "src/api/bangumi/calendar.js", "src/api/atom/proxyAPI.js"  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

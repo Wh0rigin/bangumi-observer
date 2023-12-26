@@ -37,6 +37,10 @@ Web前端期末大作业
 1. npm install
 2. npm run serve(启动)
 
+#### TODO
+* js->ts
+* 选项式->组合式
+
 #### 参与贡献
 
 1.  Fork 本仓库
