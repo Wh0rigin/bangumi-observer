@@ -60,7 +60,10 @@
 
     </div>
   </div> -->
-  <router-view></router-view>
+  <transition name="fade" mode="out-in" enter-active-class="animate__animated animate__fadeIn"
+    leave-active-class="animate__animated animate__fadeOut">
+    <router-view></router-view>
+  </transition>
 </template>
 
 <script>
@@ -293,4 +296,5 @@ export default {
   align-items: center;
   flex-wrap: wrap;
   padding: 30px;
-}</style>
+}
+</style>
