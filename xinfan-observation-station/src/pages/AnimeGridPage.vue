@@ -3,43 +3,53 @@
         <div id="floatButton" @click="returnMainPage()">返回</div>
         <div class="content-wrap">
             <anime-grid />
-            
+
         </div>
-        
+
     </div>
 </template>
   
-<script>
+<script lang="ts" setup>
 
 import { useRouter } from 'vue-router'
 import AnimeGrid from '@/components/animegrid/AnimeGrid.vue'
-
+import { onMounted } from 'vue';
 
 // import {getAnswer} from '../api/chat/chatAPI.js'
 // import HelloWorld from './components/HelloWorld.vue'
 
 
-export default {
-    name: 'AnimeGridPage',
-    components: {
-        AnimeGrid,
+let router = null;
 
-    },
-    data() {
-        return {
-            router: null,
-        }
-    },
-    methods: {
-        returnMainPage(){
-            this.router.push('/bangumi')
-        }
-    },
-    mounted() {
-        this.router = useRouter();
-    },
-
+const returnMainPage = function () {
+    router.push('/bamgumi')
 }
+
+onMounted(()=>{
+    router = useRouter();
+});
+
+//----选项式----把lang和setup去掉稍稍改一下就可以用//
+// export default {
+//     name: 'AnimeGridPage',
+//     components: {
+//         AnimeGrid,
+
+//     },
+//     data() {
+//         return {
+//             router: null,
+//         }
+//     },
+//     methods: {
+//         returnMainPage(){
+//             this.router.push('/bangumi')
+//         }
+//     },
+//     mounted() {
+//         this.router = useRouter();
+//     },
+// }
 </script>
   
 <style scoped>
@@ -80,21 +90,24 @@ export default {
     background-color: #3498db;
     color: #fff;
     border: none;
-    border-radius: 10px; /* 圆角半径 */
-    font-size: 14px; /* 调整字体大小 */
-    padding: 10px; /* 调整内边距 */
+    border-radius: 10px;
+    /* 圆角半径 */
+    font-size: 14px;
+    /* 调整字体大小 */
+    padding: 10px;
+    /* 调整内边距 */
     cursor: pointer;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    white-space: nowrap; /* 防止文本换行 */
-    transition: background 0.3s ease; /* 添加背景颜色的过渡效果 */
+    white-space: nowrap;
+    /* 防止文本换行 */
+    transition: background 0.3s ease;
+    /* 添加背景颜色的过渡效果 */
 }
 
 #floatButton:hover {
-    background: linear-gradient(to right, #3498db, #ff9ff4); /* 添加渐变效果，可以根据需要调整颜色 */
+    background: linear-gradient(to right, #3498db, #ff9ff4);
+    /* 添加渐变效果，可以根据需要调整颜色 */
 }
-
-
-
 </style>
   
