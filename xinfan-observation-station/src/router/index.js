@@ -37,6 +37,9 @@ const routes = [
     path: '/animegrid',
     name: 'animegrid',
     component: () => import('@/pages/AnimeGridPage.vue')
+  },
+  {
+    path
   }
 ];
 

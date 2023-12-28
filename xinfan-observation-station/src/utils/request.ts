@@ -73,7 +73,7 @@ bilibili.interceptors.response.use(
 );
 
 export const music163 = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: "http://localhost:5000",
     timeout: 5000,
 });
 
@@ -88,6 +88,34 @@ music163.interceptors.request.use(
 );
 
 music163.interceptors.response.use(
+    (response) => {
+        const res = response;
+
+        return res;
+    },
+    (error) => {
+        console.log("err" + error);
+        return Promise.reject(error);
+    }
+);
+
+
+export const music163Net = axios.create({
+    baseURL: "http://localhost:3000",
+    timeout: 5000,
+});
+
+music163Net.interceptors.request.use(
+    (config) => {
+        return config;
+    },
+    (error) => {
+        console.log(error);
+        return Promise.reject(error);
+    }
+);
+
+music163Net.interceptors.response.use(
     (response) => {
         const res = response;
 

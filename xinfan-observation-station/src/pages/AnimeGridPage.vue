@@ -22,7 +22,7 @@ import { onMounted } from 'vue';
 let router = null;
 
 const returnMainPage = function () {
-    router.push('/bamgumi')
+    router.push('/bangumi')
 }
 
 onMounted(()=>{

@@ -52,7 +52,7 @@
         }
       },
       calculateWordLength(word) {
-        // You may want to customize this based on your styling
+        
         return word.text.length;
       },
       getWordStyle() {
@@ -75,7 +75,7 @@
         return color;
       },
       handleWordClick(word) {
-        // Handle the word click event as needed
+        
         console.log(`Clicked on word: ${word.text}`);
       },
     },

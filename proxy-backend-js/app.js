@@ -146,7 +146,7 @@ async function parseAtomFeed(xmlData) {
 app.get("/atom", async (req, res) => {
     try {
         const atomFeedURL = req.query.atomurl;
-        console.log("atomFeedURL:" +atomFeedURL);
+        console.log("atomFeedURL:" + atomFeedURL);
         const xmlData = await fetchAtomFeed(atomFeedURL);
         const data = await parseAtomFeed(xmlData);
         console.log("data:" + data);
@@ -185,6 +185,32 @@ app.post("/call", async (req, res) => {
     } catch (error) {
         console.error("Error:", error.message);
         res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+app.get("/playlist/detail", async (req, res) => {
+    try {
+        // 获取查询参数
+        const id = req.query.id;
+        const s = req.query.s;
+
+        // 检查是否存在必要的参数
+        if (!id || !s) {
+            return res
+                .status(400)
+                .send("Missing required parameters: id and s");
+        }
+
+        // 构建代理请求的 URL
+        const apiUrl = `https://music.163.com/api/v6/playlist/detail?id=${id}&s=${s}`;
+
+        // 发送代理请求
+        const response = await axios.get(apiUrl);
+
+        // 将代理得到的响应发送给客户端
+        res.json(response.data);
+    } catch (error) {
+        console.error("代理请求出错：", error);
+        res.status(500).send("Internal Server Error");
     }
 });
 

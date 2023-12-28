@@ -7,12 +7,15 @@
       <h2>请选择番剧</h2>
       <p class="input-box"><input class="input" v-model="inputValue" placeholder="输入番组搜索" @keyup.enter="searchAnime()" />
       </p>
+      <div v-if="searchError">搜索超时了请重试</div>
       <div class="scrollable-div">
+        
         <div class="content">
           <bgm-card v-for="(item, index) in searchResult" :key="index" :name="item.name_cn || item.name"
             :rating="item.rating && item.rating.score" :ratingCount="item.rating && item.rating.total"
             :imageSrc="item.images && item.images.large" :firstPlay="item.air_date"
-            :doing="item.collection && item.collection.doing" :url="item.url" @click="sendDataToParent(item.images && item.images.large,item.name_cn || item.name)" />
+            :doing="item.collection && item.collection.doing" :url="item.url"
+            @click="sendDataToParent(item.images && item.images.large, item.name_cn || item.name)" />
         </div>
       </div>
 
@@ -32,7 +35,8 @@ export default {
     return {
       isVisible: false,
       inputValue: '',
-      searchResult: []
+      searchResult: [],
+      searchError: false
     };
   },
   methods: {
@@ -46,11 +50,23 @@ export default {
       this.isVisible = false;
     },
     async searchAnime() {
-      const response = await search(this.inputValue, { 'type': 2, 'responseGroup': 'large' })
-      console.log(response.data.list)
-      this.searchResult = response.data.list
+      this.searchError = false;
+      try {
+        const response = await search(this.inputValue, { 'type': 2, 'responseGroup': 'large' });
+        // console.log(response.data.list)
+        // return response.data.list;
+        this.searchResult = response.data.list
+      } catch (error) {
+        console.error('搜索发生错误:', error.message);
+        this.searchError = true;
+        this.searchResult = []
+        // throw error; // 抛出异常，以便上层代码能够捕获并处理
+      }
+    //   const response = await search(this.inputValue, { 'type': 2, 'responseGroup': 'large' })
+    //   console.log(response.data.list)
+    //   this.searchResult = response.data.list
     },
-    sendDataToParent(imgSrc,title) {
+    sendDataToParent(imgSrc, title) {
       this.closeModal()
       // 传递数据给父组件
       // console.log("son:"+imgSrc);
