@@ -1,5 +1,6 @@
 // custom.d.ts
 
+
 declare module "js-cookie" {
     const Cookies: {
         get: (key: object) => object | undefined;
@@ -10,3 +11,6 @@ declare module "js-cookie" {
 
     export = Cookies;
 }
+
+
+

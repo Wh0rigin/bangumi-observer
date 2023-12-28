@@ -91,7 +91,7 @@ import BgmCard from '../components/bangumi/BgmCard.vue';
 import FutureBgmGroup from '../components/bangumi/FutureBgmGroup.vue';
 import { useRouter } from 'vue-router'
 
-
+// import { useWebSocket } from 'vue-native-websocket';
 export default {
     name: 'BangumiPage',
     components: {
@@ -110,31 +110,63 @@ export default {
             year: 2023,
             month: 12,
             day: 10,
-            hour:0,
-            minute:0,
-            second:0,
+            hour: 0,
+            minute: 0,
+            second: 0,
             isClassActive: true,
             inputValue: '',
             page: 'BgmCalendar',
             animes: [],
             searchResult: [],
             chartData: [5, 3, 2, 1, 3, 2, 1],
-            xAxisLabels: [],
+            xAxisLabels: ['00:00:00','00:00:00','00:00:00','00:00:00','00:00:00','00:00:00','00:00:00'],
+            socket: null,
+            timestamp: ''
         }
     },
     mounted() {
+        // this.socket = useWebSocket('ws://localhost:5000');
+        // this.socket.value.onmessage = (event) => {
+        //     this.message = event.data;
+        //     console.log(this.message);
+        // };
+        this.socket = new WebSocket('ws://localhost:5000');
+        // 监听WebSocket打开事件
+        this.socket.addEventListener('open', () => {
+            console.log('WebSocket连接已打开');
+        });
+
+        // 监听WebSocket消息事件
+        this.socket.addEventListener('message', (event) => {
+            const data = JSON.parse(event.data);
+            this.timestamp = data.timestamp;
+            this.getTime();
+        });
+
+        // 监听WebSocket关闭事件
+        this.socket.addEventListener('close', () => {
+            console.log('WebSocket连接已关闭');
+        });
+
+        // 监听WebSocket错误事件
+        this.socket.addEventListener('error', (event) => {
+            console.error('WebSocket连接发生错误', event);
+        });
+
+
         this.router = useRouter();
-        this.getTime();
+        
         this.animes = recommandedMock;
-        for(let i = 0;i < 7;i++){
-            let cursec = this.second - 3*(6-i);
+        this.xAxisLabels = []
+        for (let i = 0; i < 7; i++) {
+            let cursec = this.second - 3 * (6 - i);
             let curmin = this.minute;
             let curhour = this.hour;
-            if(cursec < 0){
+            if (cursec < 0) {
                 curmin = this.minute - 1
                 cursec += 60
-                if(curmin < 0){
-                    curhour = curhour - 1 < 0 ? 23 : curhour-1 
+                if (curmin < 0) {
+                    curhour = curhour - 1 < 0 ? 23 : curhour - 1
                     curmin += 60;
                 }
             }
@@ -148,6 +180,12 @@ export default {
     beforeUnmount() {
         // 在组件销毁前清除定时器
         clearInterval(this.timer);
+        if (this.socket) {
+            this.socket.close();
+        }
+        // this.socket.value.onclose = () => {
+        //     console.log('WebSocket disconnected');
+        // };
     },
     // watch: {
     //     chartData: {
@@ -163,21 +201,22 @@ export default {
             // for (let i = 0; i < this.chartData.length; i++) {
             //     this.chartData[i] = Math.floor(Math.random() * 100);
             // }
-            this.getTime()
+            // this.getTime()
             this.chartData.shift();
-            this.chartData.push(Math.floor(Math.random() * 5)+1);
+            this.chartData.push(Math.floor(Math.random() * 5) + 1);
             this.xAxisLabels.shift();
             this.xAxisLabels.push(`${this.hour}:${this.minute}:${this.second}`)
             // console.log(this.chartData)
         },
         getTime() {
-            const date = new Date();
+            const date = new Date(this.timestamp);
             this.year = date.getFullYear();
             this.month = date.getMonth() + 1;
             this.day = date.getDate();
             this.hour = date.getHours();
             this.minute = date.getMinutes();
             this.second = date.getSeconds();
+            // console.log(this.day);
         },
         inputUsing() {
             this.isClassActive = false
