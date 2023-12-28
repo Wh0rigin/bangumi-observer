@@ -11,6 +11,27 @@ Web前端期末大作业
 * js爬虫->yuc(可选)
 * py爬虫->yuc(可选)
 
+#### 文件目录
+```bash
+|----- .gitee #可无视
+|----- .gitignore   # git进行版本控制时忽略的文件
+|----- atom-js      # atom解析
+|----- bride-backend-py # flask代理服务器（不再维护）
+|----- doc  #存一些文档，如
+|----- output.json
+|----- proxy-backend-js
+|----- README.md
+|----- rss-js
+|----- web-scraper-js
+|----- xinfan-observation-station
+|----- 基于Vue技术的新番观测站开发.doc
+|----- 基于Vue技术的新番观测站开发.pdf
+
+5 个文件      4,807,676 字节
+10 个目录 17,823,059,968 可用字节
+```
+
+
 #### 功能点详情
 * 周更动画 （Bangumi周更信息获取）
 * 番剧索引 （Bangumi搜索）

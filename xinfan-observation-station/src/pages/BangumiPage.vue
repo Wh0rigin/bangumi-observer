@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div id="floatButton"  @click="toGrid()">个人动画生涯喜好表 =></div>
+        <div id="floatButton" @click="toGrid()">个人动画生涯喜好表 =></div>
         <aside class="sidebar">
             <p class="input-box"><input class="input" v-model="inputValue" placeholder="输入番组搜索" @focus="inputUsing"
                     @blur="inputDisfocus" /><svg @click="inputSearch" :class="{ 'display ': isClassActive }"
@@ -58,7 +58,7 @@
             <div v-if="page == 'WebsiteInfo'">
                 <LineChart :data="chartData" :xAxisLabels="xAxisLabels"></LineChart>
                 <h1>为什么选用Vue?</h1>
-                <img src="../assets/why_vue.png"/>
+                <img src="../assets/why_vue.png" />
                 <h2>以动画名命名版本号，是动画爱好者的宝藏</h2>
             </div>
 
@@ -110,27 +110,74 @@ export default {
             year: 2023,
             month: 12,
             day: 10,
+            hour:0,
+            minute:0,
+            second:0,
             isClassActive: true,
             inputValue: '',
             page: 'BgmCalendar',
             animes: [],
             searchResult: [],
-            chartData: [10, 20, 30, 40, 50, 30, 25],
-            xAxisLabels: ['2023-11-10', '2023-11-11', '2023-11-12', '2023-11-13', '2023-11-14', '2023-11-15', '2023-11-16']
+            chartData: [5, 3, 2, 1, 3, 2, 1],
+            xAxisLabels: [],
         }
     },
     mounted() {
         this.router = useRouter();
         this.getTime();
         this.animes = recommandedMock;
+        for(let i = 0;i < 7;i++){
+            let cursec = this.second - 3*(6-i);
+            let curmin = this.minute;
+            let curhour = this.hour;
+            if(cursec < 0){
+                curmin = this.minute - 1
+                cursec += 60
+                if(curmin < 0){
+                    curhour = curhour - 1 < 0 ? 23 : curhour-1 
+                    curmin += 60;
+                }
+            }
+            this.xAxisLabels.push(`${curhour}:${curmin}:${cursec}`)
+        }
+        this.timer = setInterval(() => {
+            this.updateChartData();
+        }, 3000);
         // console.log(this.animes);
     },
+    beforeUnmount() {
+        // 在组件销毁前清除定时器
+        clearInterval(this.timer);
+    },
+    // watch: {
+    //     chartData: {
+    //         handler(newChartData) {
+    //             // 在 chartData 变化时进行一些操作
+    //             console.log('Chart Data Updated:', newChartData);
+    //         },
+    //         deep: true // 深度监听数组内部的变化
+    //     }
+    // },
     methods: {
+        updateChartData() {
+            // for (let i = 0; i < this.chartData.length; i++) {
+            //     this.chartData[i] = Math.floor(Math.random() * 100);
+            // }
+            this.getTime()
+            this.chartData.shift();
+            this.chartData.push(Math.floor(Math.random() * 5)+1);
+            this.xAxisLabels.shift();
+            this.xAxisLabels.push(`${this.hour}:${this.minute}:${this.second}`)
+            // console.log(this.chartData)
+        },
         getTime() {
-            const date = new Date()
+            const date = new Date();
             this.year = date.getFullYear();
             this.month = date.getMonth() + 1;
             this.day = date.getDate();
+            this.hour = date.getHours();
+            this.minute = date.getMinutes();
+            this.second = date.getSeconds();
         },
         inputUsing() {
             this.isClassActive = false
@@ -170,7 +217,7 @@ export default {
                 console.error('Error fetching data:', error);
             }
         },
-        toGrid(){
+        toGrid() {
             this.router.push('/animegrid')
         }
     },
@@ -340,18 +387,24 @@ export default {
     background-color: #3498db;
     color: #fff;
     border: none;
-    border-radius: 10px; /* 圆角半径 */
-    font-size: 14px; /* 调整字体大小 */
-    padding: 10px; /* 调整内边距 */
+    border-radius: 10px;
+    /* 圆角半径 */
+    font-size: 14px;
+    /* 调整字体大小 */
+    padding: 10px;
+    /* 调整内边距 */
     cursor: pointer;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    white-space: nowrap; /* 防止文本换行 */
-    transition: background 0.3s ease; /* 添加背景颜色的过渡效果 */
+    white-space: nowrap;
+    /* 防止文本换行 */
+    transition: background 0.3s ease;
+    /* 添加背景颜色的过渡效果 */
 }
 
 #floatButton:hover {
-    background: linear-gradient(to right, #3498db, #ff9ff4); /* 添加渐变效果，可以根据需要调整颜色 */
+    background: linear-gradient(to right, #3498db, #ff9ff4);
+    /* 添加渐变效果，可以根据需要调整颜色 */
 }
 </style>
   

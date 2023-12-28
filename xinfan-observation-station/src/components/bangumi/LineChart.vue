@@ -11,10 +11,12 @@ export default {
         data: {
             type: Array,
             required: true,
+            default: () => []
         },
         xAxisLabels: {
             type: Array,
             required: true,
+            default: () => []
         },
         width: {
             type: Number,
@@ -27,8 +29,21 @@ export default {
     },
     mounted() {
         this.drawChart();
+        // this.timer = setInterval(() => {
+        //     this.updateChartData();
+        // }, 3000);
     },
+    // beforeUnmount() {
+    //     // 在组件销毁前清除定时器
+    //     clearInterval(this.timer);
+    // },
     methods: {
+        // updateChartData() {
+        //     // 生成随机数并更新 chartData 中的值
+        //     for (let i = 0; i < this.data.length; i++) {
+        //         this.data[i] = Math.floor(Math.random() * 100);
+        //     }
+        // },
         drawChart() {
             const canvas = this.$refs.chartCanvas;
             const ctx = canvas.getContext("2d");
@@ -45,7 +60,7 @@ export default {
             const minY = Math.min(...this.data);
 
             // 计算数据点的纵向缩放比例
-            const scaleY = (this.height-50) / (maxY - minY);
+            const scaleY = (this.height - 50) / (maxY - minY);
 
             // 计算竖轴刻度的值和间隔
             const yTickCount = 5; // 可以根据需要调整刻度数量
@@ -124,8 +139,14 @@ export default {
         },
     },
     watch: {
-        data: "drawChart",
-        xAxisLabels: "drawChart",
+        data: {
+            handler() {
+                // 在 chartData 变化时进行一些操作
+                this.drawChart();
+            },
+            deep: true // 深度监听数组内部的变化
+        },
+        // xAxisLabels: "drawChart",
     },
 };
 </script>
