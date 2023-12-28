@@ -1,13 +1,15 @@
 const express = require("express");
 const axios = require("axios");
+const http = require("http");
 const parseString = require("xml2js").parseString;
-const app = express();
-const port = 5000;
 const cors = require("cors");
 const util = require("util");
-const parseStringAsync = util.promisify(parseString);
-
 const { readYamlFile } = require("./utils/yaml.js"); // Import readYamlFile function
+const WebSocket = require("ws");
+
+const app = express();
+const port = 5000;
+const parseStringAsync = util.promisify(parseString);
 
 // Replace this with your actual token retrieval logic
 const getTokenFromYaml = () => {
@@ -214,6 +216,21 @@ app.get("/playlist/detail", async (req, res) => {
     }
 });
 
-app.listen(port, () => {
+// app.listen(port, () => {
+//     console.log(`Server is running on port ${port}`);
+// });
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+
+wss.on("connection", (ws) => {
+    console.log("WebSocket connected");
+
+    // 发送时间戳给客户端
+    setInterval(() => {
+        ws.send(JSON.stringify({ timestamp: Date.now() }));
+    }, 1000);
+});
+
+server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
